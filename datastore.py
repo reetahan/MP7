@@ -1,14 +1,10 @@
-from tinydb import TinyDB, Query
+import pickledb
 
-db = TinyDB('mp7data.json')
+db = pickledb.load('realmp7data.db', False)
 
-
-def passData(name, preferences, time):
-    preftime = [preferences, time]
-    id = db.insert({name:preftime})
-    return id
+def passData(name, preferences, time, id):
+    namepreftime = [name, preferences, time]
+    db.set(id,namepreftime)
 
 def returnData(id):
-    for item in db:
-        if(item.doc_id == id):
-            return item
+    return db.get(id)
